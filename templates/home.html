@@ -4,12 +4,12 @@
 
 
     <!-- Posts Section -->
-    <div class="posts-container page-content">
+    <div class="content-section ">
         {% for post in posts %}
 
         {% if post == posts[0] %}
-            <div class="post  md-4  mr-5 p-3 card">
-                <div class="article-metadata">
+            <div class="post  md-4  p-3 card">
+                <div class="article-metadata ">
                     <a href="" class = "article-author mr-2"> {{ post.author }}  </a> 
                     <small class = "text-muted">{{ post.date_posted }}</small>
                 </div>
@@ -18,7 +18,7 @@
                 <p> {{ post.content }} </p>
             </div>
         {% else %}
-            <div class="post my-4   mr-5 p-3 card">
+            <div class="post my-4  p-3 card">
                 <div class="article-metadata">
                     <a href="" class = "article-author mr-2"> {{ post.author }}  </a> 
                     <small class = "text-muted">{{ post.date_posted }}</small>

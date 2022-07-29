@@ -5,6 +5,11 @@
     font-family: 'Poppins', sans-serif;
 }
 
+body{
+    background-color: gainsboro;
+    height: 100vh;
+}
+
 h1, h2, h3, h4, h5, h6 {
     color: black;
     font-weight: bold;
@@ -13,7 +18,9 @@ a:hover
 {
     text-decoration: none;
 }
-
+.navbar-section{
+    width: 100%;
+}
 .navbar-section a:hover
 {
     color:cornflowerblue   
@@ -41,11 +48,12 @@ a:hover
 .sidebar-1{
     border: 2px solid rgb(232, 235, 193);
     border-radius: 15px;
-    width: 20vw;
+    height: fit-content;
+    width: 20rem;
+    margin-left: 1.5rem;
 }
 .whole-page-container{
-    background-color: gainsboro;
-    height: 100vh;
+    
 }
 
 .page-content{
@@ -55,4 +63,18 @@ a:hover
 
 .dark-text{
     color: black;
+}
+
+.content-section{
+    
+    
+    border: 1px solid #dddddd;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    width: 47.5rem;
+
+}
+
+.white-background{
+    background-color: white;
 }
