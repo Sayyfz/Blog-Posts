@@ -1,0 +1,27 @@
+.posts-container{
+    width: 55vw;
+    margin-right: 3rem;
+}
+
+.post{
+    min-width: 10vw;
+    background-color: white;
+    border-radius: 15px;
+    border: 1px solid  rgb(189, 189, 189);
+}
+
+.article-author{
+
+}
+.article-author:hover{
+    text-decoration: none;
+}
+
+.article-title {
+    text-decoration:none;
+    color: #444444;
+}
+
+.article-title:hover{
+    text-decoration: none;
+}

@@ -1,0 +1,36 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+
+    <!-- Posts Section -->
+    <div class="posts-container page-content">
+        {% for post in posts %}
+
+        {% if post == posts[0] %}
+            <div class="post  md-4  mr-5 p-3 card">
+                <div class="article-metadata">
+                    <a href="" class = "article-author mr-2"> {{ post.author }}  </a> 
+                    <small class = "text-muted">{{ post.date_posted }}</small>
+                </div>
+                
+                <h2><a href = "" class = "article-title">{{ post.title }} </a></h2>
+                <p> {{ post.content }} </p>
+            </div>
+        {% else %}
+            <div class="post my-4   mr-5 p-3 card">
+                <div class="article-metadata">
+                    <a href="" class = "article-author mr-2"> {{ post.author }}  </a> 
+                    <small class = "text-muted">{{ post.date_posted }}</small>
+                </div>
+                
+                <h2><a href = "" class = "article-title">{{ post.title }} </a></h2>
+                <p> {{ post.content }} </p>
+            </div>
+        {% endif %}
+        {% endfor %}
+    </div>
+    
+
+    
+{% endblock %}
