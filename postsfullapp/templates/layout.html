@@ -28,9 +28,13 @@
     
                         <div class = "my-2"><a href="/" class = " btn btn-primary nav-item nav-link" id="home-button"> Home </a></div>
                         <div class = "my-2 mr-auto"><a href="/about" class = "nav-item nav-link "> About </a></div>
-    
-                        <div class = "my-2"><a href ="/login" class = "nav-item nav-link ">Login</a></div>
-                        <div class = "my-2"><a href ="/register" class = "nav-item nav-link ">Register</a></div>
+                        {% if  current_user.is_authenticated %}
+                            <div class = "my-2"><a href ="/account" class = "nav-item nav-link ">Profile</a></div>
+                            <div class = "my-2"><a href ="/logout" class = "nav-item nav-link ">Logout</a></div>
+                        {% else %}
+                            <div class = "my-2"><a href ="/login" class = "nav-item nav-link ">Login</a></div>
+                            <div class = "my-2"><a href ="/register" class = "nav-item nav-link ">Register</a></div>
+                        {% endif %}
                         
                     </div>
                     

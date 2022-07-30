@@ -1,9 +1,8 @@
-from flask import Flask, flash,redirect
-from flask import Flask,render_template,request,url_for
-from forms import RegistrationForm, LoginForm
-app = Flask(__name__)
-
-app.config['SECRET_KEY'] = 'cffd88e7a1063b2a76e356cc59551da0'
+from flask import Flask,render_template,request,url_for, redirect,flash
+from postsfullapp.models import User, Post
+from postsfullapp.forms import RegistrationForm, LoginForm, UpdateAccountForm
+from postsfullapp import app, bcrypt,db
+from flask_login import login_user, logout_user , current_user, login_required
 
 posts = [
     {
@@ -81,31 +80,63 @@ posts = [
 def home():
     return render_template('home.html', posts = posts)
 
+
+
 @app.route("/about")
 def about():
     return render_template('about.html', title = 'About')
 
 
+
+
 @app.route("/register", methods = ['GET', 'POST'])
 def register():
-    form = RegistrationForm()
-    if form.validate_on_submit():
-        flash(f'Account Created for {form.username.data}!', 'success')
+    if(current_user.is_authenticated):
         return redirect(url_for('home'))
+    form = RegistrationForm()
+    
+    if form.validate_on_submit():
+        hashed_pw = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        user = User(username = form.username.data, password  = hashed_pw, email = form.email.data)
+        db.session.add(user)
+        db.session.commit()
+        
+        flash('Account created successfully!', 'success')
+        return redirect(url_for('login'))
     return render_template('register.html',title='Register',  form = form)
+
+
 
 @app.route("/login", methods = ['GET', 'POST'])
 def login():
+    if(current_user.is_authenticated):
+        return redirect(url_for('home'))
     form = LoginForm()
     if form.validate_on_submit():
-        if form.email.data == 'admin@blog.com' and form.password.data == 'password':
+        user = User.query.filter_by(email = form.email.data).first()
+        if user and bcrypt.check_password_hash(user.password, form.password.data):
+            login_user(user, remember = form.remember.data)
             flash('You have been logged in!', 'success')
-            return redirect(url_for('home'))
+            next_page =  request.args.get('next')
+            if next_page:
+                return redirect(next_page)
+            else:
+                return redirect(url_for('home'))
+            
         else:
-            flash('Login unsuccessful. Please check username and password', 'danger')
+            flash('Login unsuccessful. Please check email and password', 'danger')
             
     return render_template('login.html',title='Login',  form = form)
 
 
-if __name__ == '__main__':
-     app.run(debug = True)
+@app.route("/logout", methods = ['GET'])
+def logout():
+    logout_user()
+    return redirect(url_for('home'))
+    
+@app.route("/account", methods = ['GET'])
+@login_required
+def account():
+    form = UpdateAccountForm()
+    image_file = url_for('static', filename = 'profile_pics/' + current_user.image_file)
+    return render_template('account.html', title = 'Account', image_file=image_file, form = form)
