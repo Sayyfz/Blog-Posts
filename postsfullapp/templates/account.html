@@ -3,10 +3,10 @@
 {% block body %}
 
    <div class="content-section white-background px-5 py-3">
-        <div class="media d-flex flex-row align-items-center">
-            <img src="{{ image_file }}"  class="rounded-circle account-img">
+        <div class="media d-flex flex-row align-items-center pt-4">
+            <img class="rounded-circle profile-img" src="{{ image_file }}">
 
-            <div class="media-body ml-2">
+            <div class="media-body ml-3 ">
                 <h2 class="account-heading">{{ current_user.username }}</h2>
                 <p class="text-secondary">{{ current_user.email }}</p>
             </div>
@@ -15,7 +15,7 @@
 
         <div class="update-acc-form mt-5 py-1 px-2 ">
         
-            <form action="" method = "POST" novalidate>
+            <form action="" method = "POST" novalidate enctype="multipart/form-data"> <!-- enctype to ensure validation on picture upload -->
                 {{ form.hidden_tag() }}
                 <fieldset class="form-group" >
                     <legend class = "border-bottom mb-4">Account Info</legend>
@@ -52,9 +52,16 @@
     
     
                     </div>
-    
-                    
-    
+                    <div class="form-group">
+                        {{ form.picture.label() }}
+                        {{ form.picture(class = "form-control-file") }}
+                        {% if form.picture.errors %}
+                            {% for error in form.picture.errors %}
+                                <span class = "text-danger">{{ error }}</span></br>
+                            {% endfor %}
+                        {% endif %}
+                        
+                    </div>
                 </fieldset>
     
                 <div class="form-group">
